@@ -143,7 +143,7 @@ export interface User {
  */
 export interface Example {
   id: string;
-  invalid?: string | null;
+  'Test Field'?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -232,7 +232,7 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "examples_select".
  */
 export interface ExamplesSelect<T extends boolean = true> {
-  invalid?: T;
+  'Test Field'?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

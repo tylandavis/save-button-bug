@@ -8,7 +8,6 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -31,9 +30,18 @@ export default buildConfig({
       slug: 'examples',
       fields: [
         {
-          name: 'invalid',
+          name: 'Test Field',
           type: 'text',
-          validate: () => 'field is always invalid',
+          validate: async () => {
+            try {
+              const res = await fetch('https://yesno.wtf/api')
+              if (!res.ok) return 'Third-party service error'
+              const data = (await res.json()) as { answer?: string }
+              return data.answer === 'yes' ? true : 'Invalid'
+            } catch (err) {
+              return 'Could not contact third-party service for validation'
+            }
+          },
         },
       ],
     },
